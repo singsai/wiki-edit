@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    body {
+      padding: 20px;
+      margin: 0 auto;
+      width: 60%;
+    }
+    #edit {
+      text-decoration: underline;
+    }
+    #edit:hover {
+      cursor: pointer;
+      text-decoration: none;
+    }    
+    #warning {
+      color: red;
+    }
+    #modal {
+      border: 1px solid black;
+      width: 200px;
+      height: 160px;
+      position: absolute;
+      z-index: 3; /* put .gold-box above .green-box and .dashed-box */
+      background: white;
+      left: 40%;
+      top: 40%;      
+      border-radius: 10px;
+    }
+    #header {
+      display: inline-block;
+    }
+    .invisible {
+      display: none;
+    }
+    .visible {
+      display: block;
+    }
+    .content {
+      padding: 20%;
+    }
+    #headerInput {
+      margin:-20%;
+    }
+    .controls {
+      padding-left: 55%;
+    }        
+    button {
+      display: block;      
+    }    
+  </style>
+</head>
+<body>
+  <div><h1 id="header">Headline</h1>&nbsp;<span id="edit">edit</span></div> 
+  <section>
+    <p>
+      Aenean consectetur a mauris eu pharetra. Vivamus ipsum dolor, tincidunt a purus sed, maximus consectetur lacus. Pellentesque sed lorem ac neque porta sollicitudin. In aliquet aliquet nunc, non tempus justo dignissim quis. In nec placerat nulla. Ut ut leo quis turpis finibus gravida.  
+    </p>  
+    <p>
+      Mauris varius vehicula erat, a pulvinar nisl pulvinar quis. Suspendisse fermentum pulvinar aliquet. Duis nec mi consequat, mattis diam ac, malesuada nulla. Vivamus dictum volutpat lacus. Ut porta volutpat augue, sed dictum ex laoreet at.   
+    </p>
+    <p>
+      Vivamus tempor lorem commodo purus blandit, a faucibus dolor accumsan. Curabitur vulputate leo sagittis lacus egestas efficitur. Aliquam erat volutpat. Pellentesque suscipit sollicitudin magna, sed sodales purus lobortis vitae.   
+    </p>
+    <p>
+      Nam et consectetur felis. Morbi nisl orci, rutrum quis nulla tincidunt, eleifend cursus risus. Morbi tortor urna, finibus et sem a, gravida porta lectus. Vivamus imperdiet dui ac erat fermentum pulvinar. Maecenas commodo, elit nec scelerisque feugiat, ex ex bibendum lorem, aliquet vulputate orci risus in ipsum. Fusce vitae neque at lacus euismod consequat at ac quam. Sed at dui nulla. Phasellus ultrices pretium orci, ut feugiat purus blandit ac.       
+    </p>
+  </section>
+  <div id="modal" class="invisible">
+    <div class="content">
+      <input id="headerInput" type="text" value=""/> 
+      <div class="controls">
+        <button id="btn" >Save</button>        
+      </div>
+      <div id="warning"></div>
+    </div>
+  </div>
+<script>
+  var wikiAPI = function(){    
+    return {
+      currentElement: null,
+      save: function() {          
+        if (document.getElementById('headerInput').value !== '') {
+          wikiAPI.currentElement.innerText = document.getElementById('headerInput').value
+          document.getElementById('modal').classList.remove('visible')
+        } else {
+          document.getElementById('warning').innerText = "Enter some text!"
+        }
+      },
+      setElement: function(element) {
+        wikiAPI.currentElement = document.getElementById(element)
+        document.getElementById('headerInput').value = wikiAPI.currentElement.innerText        
+      },
+      initialize: function(){
+        document.addEventListener('DOMContentLoaded', function() {
+          document.getElementById('btn').addEventListener('click', ()=>wikiAPI.save())  
+          document.getElementById('edit').addEventListener('click', function(){
+            document.getElementById('modal').classList.add('visible')
+          })        
+        })        
+      }
+    }
+  }()
+  wikiAPI.initialize() 
+  wikiAPI.setElement('header')   
+</script>  
+</body>
+</html>
