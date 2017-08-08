@@ -16,25 +16,27 @@
       cursor: pointer;
       text-decoration: none;
     }    
+    .close {
+      padding-left: 93%;
+      cursor: default;
+    }
     #warning {
       color: red;
     }
     .header {
       padding-right: 5px;
+      display: inline-block;
     }
     #modal {
       border: 1px solid black;
       width: 200px;
       height: 160px;
       position: absolute;
-      z-index: 3; /* put .gold-box above .green-box and .dashed-box */
+      z-index: 3; 
       background: white;
       left: 40%;
       top: 40%;      
       border-radius: 10px;
-    }
-    #header, #header2 {
-      display: inline-block;
     }
     .invisible {
       display: none;
@@ -57,8 +59,8 @@
   </style>
 </head>
 <body>
-  <div><h1 id="header" class="header">Headline</h1><span class="edit">edit</span></div> 
-  <div><h2 id="header2" class="header">Headline 2</h2><span class="edit">edit</span></div> 
+  <div><h1 id="h1" class="header">Headline</h1><span class="edit">edit</span></div> 
+  <div><h2 id="h2" class="header">Headline 2</h2><span class="edit">edit</span></div> 
   <section>
     <p>
       Aenean consectetur a mauris eu pharetra. Vivamus ipsum dolor, tincidunt a purus sed, maximus consectetur lacus. Pellentesque sed lorem ac neque porta sollicitudin. In aliquet aliquet nunc, non tempus justo dignissim quis. In nec placerat nulla. Ut ut leo quis turpis finibus gravida.  
@@ -74,6 +76,7 @@
     </p>
   </section>
   <div id="modal" class="invisible">
+    <div class='close'>&#10006;</div>
     <div class="content">
       <input id="headerInput" type="text" value=""/> 
       <div class="controls">
@@ -89,7 +92,7 @@
       save: function() {          
         if (document.getElementById('headerInput').value !== '') {
           wikiAPI.currentElement.innerText = document.getElementById('headerInput').value
-          document.getElementById('modal').classList.remove('visible')
+          wikiAPI.closeModal()
         } else {
           document.getElementById('warning').innerText = "Enter some text!"
         }
@@ -98,13 +101,18 @@
         wikiAPI.currentElement = document.getElementById(element)
         document.getElementById('headerInput').value = wikiAPI.currentElement.innerText        
       },
+      closeModal: function() {
+        document.getElementById('modal').classList.remove('visible')
+      },
       initialize: function(){
         document.addEventListener('DOMContentLoaded', function() {
           document.getElementById('btn').addEventListener('click', ()=>wikiAPI.save())  
-          document.querySelectorAll('.edit').forEach(el=>el.addEventListener('click', function(){               
+          document.querySelectorAll('.edit').forEach(el=>el.addEventListener('click', function(){              
             wikiAPI.setElement(el.previousSibling.id)                      
             document.getElementById('modal').classList.add('visible')
-          }))       
+            document.querySelector('.close').addEventListener('click', () => wikiAPI.closeModal())
+            document.getElementById('headerInput').focus()
+          })) 
         })        
       }
     }
