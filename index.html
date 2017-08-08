@@ -9,15 +9,18 @@
       margin: 0 auto;
       width: 60%;
     }
-    #edit {
+    .edit {
       text-decoration: underline;
     }
-    #edit:hover {
+    .edit:hover {
       cursor: pointer;
       text-decoration: none;
     }    
     #warning {
       color: red;
+    }
+    .header {
+      padding-right: 5px;
     }
     #modal {
       border: 1px solid black;
@@ -30,7 +33,7 @@
       top: 40%;      
       border-radius: 10px;
     }
-    #header {
+    #header, #header2 {
       display: inline-block;
     }
     .invisible {
@@ -54,7 +57,8 @@
   </style>
 </head>
 <body>
-  <div><h1 id="header">Headline</h1>&nbsp;<span id="edit">edit</span></div> 
+  <div><h1 id="header" class="header">Headline</h1><span class="edit">edit</span></div> 
+  <div><h2 id="header2" class="header">Headline 2</h2><span class="edit">edit</span></div> 
   <section>
     <p>
       Aenean consectetur a mauris eu pharetra. Vivamus ipsum dolor, tincidunt a purus sed, maximus consectetur lacus. Pellentesque sed lorem ac neque porta sollicitudin. In aliquet aliquet nunc, non tempus justo dignissim quis. In nec placerat nulla. Ut ut leo quis turpis finibus gravida.  
@@ -97,15 +101,16 @@
       initialize: function(){
         document.addEventListener('DOMContentLoaded', function() {
           document.getElementById('btn').addEventListener('click', ()=>wikiAPI.save())  
-          document.getElementById('edit').addEventListener('click', function(){
+          document.querySelectorAll('.edit').forEach(el=>el.addEventListener('click', function(){               
+            wikiAPI.setElement(el.previousSibling.id)                      
             document.getElementById('modal').classList.add('visible')
-          })        
+          }))       
         })        
       }
     }
   }()
   wikiAPI.initialize() 
-  wikiAPI.setElement('header')   
+   
 </script>  
 </body>
 </html>
