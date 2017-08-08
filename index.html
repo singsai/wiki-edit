@@ -96,7 +96,7 @@
         } else {
           document.getElementById('warning').innerText = "Enter some text!"
         }
-      },
+      },      
       setElement: function(element) {
         wikiAPI.currentElement = document.getElementById(element)
         document.getElementById('headerInput').value = wikiAPI.currentElement.innerText        
@@ -112,6 +112,10 @@
             document.getElementById('modal').classList.add('visible')
             document.querySelector('.close').addEventListener('click', () => wikiAPI.closeModal())
             document.getElementById('headerInput').focus()
+            document.onkeydown = function(event){
+              event.keyCode === 27 ? wikiAPI.closeModal() : null
+              event.keyCode === 13 ? wikiAPI.save() : null                
+            }
           })) 
         })        
       }
