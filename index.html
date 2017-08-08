@@ -54,6 +54,7 @@
       padding-left: 55%;
     }        
     button {
+      margin-top:3px;
       display: block;      
     }    
   </style>
@@ -111,7 +112,7 @@
             wikiAPI.setElement(el.previousSibling.id)                      
             document.getElementById('modal').classList.add('visible')
             document.querySelector('.close').addEventListener('click', () => wikiAPI.closeModal())
-            document.getElementById('headerInput').focus()
+            document.getElementById('headerInput').select()
             document.onkeydown = function(event){
               event.keyCode === 27 ? wikiAPI.closeModal() : null
               event.keyCode === 13 ? wikiAPI.save() : null                
